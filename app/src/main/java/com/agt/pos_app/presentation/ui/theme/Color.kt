@@ -11,6 +11,6 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 
-val availableColor = Color.Blue
+val availableColor = Color.Green.copy(green = 0.7f)
 val bookedColor = Color.Yellow.copy(green = 0.5f)
 val occupideColor = Color.Red

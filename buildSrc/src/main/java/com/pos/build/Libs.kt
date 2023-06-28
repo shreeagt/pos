@@ -8,10 +8,12 @@ object Libs {
     fun DependencyHandler.ComposeWithBom() {
         val implement = listOf(
             Deps.bomMaterial3,
+            Deps.bomMaterial2,
             Deps.bomPreView,
             Deps.activityCompose,
             Deps.viewModelCompose,
-            Deps.coilCompose
+            Deps.coilCompose,
+            Deps.composeNavigation
         )
         val debugImpl = listOf(
             Deps.bomTooling,

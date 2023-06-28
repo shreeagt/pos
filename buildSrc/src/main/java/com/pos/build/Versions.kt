@@ -14,6 +14,7 @@ package com.pos.build
         val constraintLayout = "2.1.4"
         val compose = "1.4.4"
         val composeBom = "2023.03.00"
+        val composeNav = "2.5.3"
         val activityCompose ="1.3.1"
         val material3 = "1.0.1"
         val material2 = "1.4.0"

@@ -28,8 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.agt.pos_app.data.module.Table
 import com.agt.pos_app.data.module.TableStatus
+import com.agt.pos_app.presentation.ui.navigation.Screen
 import com.agt.pos_app.presentation.ui.theme.availableColor
 import com.agt.pos_app.presentation.ui.theme.bookedColor
 import com.agt.pos_app.presentation.ui.theme.occupideColor
@@ -37,13 +40,16 @@ import com.agt.pos_app.util.inPosTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashBoardScreen(tableList: List<Table> = emptyList()) {
+fun DashBoardScreen(tableList: List<Table> = emptyList(), navController: NavController) {
 
     Box(modifier = Modifier) {
 
         Column {
             TopAppBar(title = {
-                Text(text = "Pos")
+                Text(
+                    text = "Pos",
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                )
             })
 
             LazyVerticalGrid(
@@ -51,7 +57,9 @@ fun DashBoardScreen(tableList: List<Table> = emptyList()) {
                 contentPadding = PaddingValues(horizontal = 20.dp)
             ) {
                 items(tableList) {
-                    BookingTable(table = it)
+                    BookingTable(table = it) {
+                        navController.navigate(Screen.OrderScreen.withArgs(it.tableNo.toString()))
+                    }
                 }
             }
 
@@ -64,16 +72,13 @@ fun DashBoardScreen(tableList: List<Table> = emptyList()) {
 
 
 @Composable
-fun BookingTable(table: Table) {
+fun BookingTable(table: Table, onClick: () -> Unit) {
 
     ElevatedCard(
         modifier = Modifier
             .size(150.dp)
             .padding(10.dp)
-            .clickable(true) {
-
-            }
-        ,
+            .clickable(enabled = true, onClick = onClick),
         colors = CardDefaults.elevatedCardColors(
             contentColor = Color.White,
             containerColor = when (table.tableStatus) {
@@ -91,7 +96,10 @@ fun BookingTable(table: Table) {
             Text(
                 text = "Table No \n\n ${table.tableNo}",
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium.copy(fontSize = 18.sp,fontWeight = FontWeight.Bold)
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
             )
         }
 
@@ -106,7 +114,7 @@ fun BookingTable(table: Table) {
 @Composable
 fun Dashboard_ScreenPrev() {
     inPosTheme {
-        DashBoardScreen(demoTable)
+        DashBoardScreen(demoTable, rememberNavController())
     }
 
 }
